@@ -1,4 +1,5 @@
 <script setup>
+import router from "@/router";
 import { useStore } from "vuex"
 
 defineProps({
@@ -13,8 +14,11 @@ const handleDelete = (id) => {
 const handleChangeStatus = (id) => {
   storeComit.commit('completeTask', id)
 }
+const handleActive = (id) => {
+  router.push({name: 'todolist', params: {id: id}})
+}
+let activeRowIndex = router.currentRoute.value.params.id
 </script>
-
 <template>
     <main>
         <table>
@@ -27,7 +31,7 @@ const handleChangeStatus = (id) => {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(task,index) in taskData" :key="index">
+                <tr v-for="(task,index) in taskData" :key="index" @click="handleActive(index)" :class="{ active: activeRowIndex === index }">
                     <td class="todo-title">{{ index+1 }}</td>
                     <td class="todo-title" :class="{brick: task.status}">{{ task.title }}</td>
                     <td class="status">
@@ -90,5 +94,8 @@ input[type="checkbox"]:hover {
 }
 .brick{
     text-decoration: line-through;
+}
+.active {
+  background-color: #f5f5f5;
 }
 </style>
