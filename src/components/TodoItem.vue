@@ -1,5 +1,6 @@
 <script setup>
-import router from "@/router";
+import { watch, ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex"
 
 defineProps({
@@ -7,6 +8,7 @@ defineProps({
     type: Object,
   }
 })
+const router = useRouter();
 const storeComit = useStore();
 const handleDelete = (id) => {
   storeComit.commit('removeTask', id)
@@ -14,10 +16,16 @@ const handleDelete = (id) => {
 const handleChangeStatus = (id) => {
   storeComit.commit('completeTask', id)
 }
+let activeRow = ref(null)
+let activeRowIndex = computed(() => parseFloat(router.currentRoute.value.params.id))
+watch(activeRowIndex, ( data) => {
+  activeRow.value = data
+}, {
+  immediate: true
+})
 const handleActive = (id) => {
-  router.push({name: 'todolist', params: {id: id}})
+  router.push(`/${id}`)
 }
-let activeRowIndex = router.currentRoute.value.params.id
 </script>
 <template>
     <main>
@@ -31,7 +39,7 @@ let activeRowIndex = router.currentRoute.value.params.id
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(task,index) in taskData" :key="index" @click="handleActive(index)" :class="{ active: activeRowIndex === index }">
+                <tr v-for="(task,index) in taskData" :key="index" @click="handleActive(index)" v-memo="[activeRowIndex === index]" :class="{ active: activeRowIndex === index }">
                     <td class="todo-title">{{ index+1 }}</td>
                     <td class="todo-title" :class="{brick: task.status}">{{ task.title }}</td>
                     <td class="status">
@@ -57,7 +65,9 @@ th {
   padding: 8px;
   text-align: center;
 }
-
+td:hover {
+  cursor: pointer;
+}
 .todo-title {
   width: 25%;
 }
