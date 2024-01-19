@@ -6,12 +6,6 @@ import { useStore } from "vuex"
 const taskData = defineModel();
 const router = useRouter();
 const storeComit = useStore();
-const handleDelete = (id) => {
-  storeComit.commit('removeTask', id)
-}
-const handleChangeStatus = (id) => {
-  storeComit.commit('completeTask', id)
-}
 let activeRow = ref(null)
 let activeRowIndex = computed(() => parseFloat(router.currentRoute.value.params.id))
 watch(activeRowIndex, ( data) => {
@@ -19,8 +13,15 @@ watch(activeRowIndex, ( data) => {
 }, {
   immediate: true
 })
+
 const handleActive = (id) => {
   router.push(`/${id}`)
+}
+const handleDelete = (id) => {
+  storeComit.commit('removeTask', id)
+}
+const handleChangeStatus = (id) => {
+  storeComit.commit('completeTask', id)
 }
 </script>
 <template>
@@ -35,11 +36,11 @@ const handleActive = (id) => {
                 </tr>
             </thead>
             <tbody >
-                <tr  v-for="(task,index) in taskData" :key="index" @click="handleActive(index)"  :class="{ active: activeRow === index }">
+                <tr v-for="(task,index) in taskData" :key="task.id" @click="handleActive(task.id)" :class="{ active: activeRow === task.id }">
                     <td class="todo-title">{{ index+1 }}</td>
                     <td class="todo-title" :class="{brick: task.status}">{{ task.title }}</td>
                     <td class="status">
-                        <input value="" :checked="task.status" @change="handleChangeStatus(index)"  type="checkbox" name="" id="">
+                        <input  :checked="task.status" @change="handleChangeStatus(index)"  type="checkbox">
                     </td>
                     <td class="feature">
                         <button class="feature-btn" @click="handleDelete(index)">Xóa</button>

@@ -18,6 +18,8 @@ const handleCloseModal = () => {
 }
 const select = ref('All')
 let task = ref(null)
+let countFinished = ref(0)
+let countUnfinish = ref(0)
 let filterTask = computed(() => {
   return store.state.tasks
 })
@@ -26,7 +28,13 @@ watch(filterTask, (data) => {
 }, {
   immediate: true
 });
+watch(task, (data) => {
+  countFinished.value = data.filter(item => item.status).length
+  countUnfinish.value = data.filter(item => !item.status).length
 
+}, {
+  immediate: true
+})
 watch(select, (data) => {
   if (data === 'Chưa hoàn thành') {
     task.value = filterTask.value.filter(item => item.status === false);
@@ -43,7 +51,13 @@ watch(select, (data) => {
   <main>
     <div class="todolist">
           <HeaderSection/>
-          <div class="select-section">
+          <div class="tools-section">
+            <div class="count-task__finish">
+                <p>Đã xong: {{ countFinished }}</p>
+            </div>
+            <div class="count-task__unfinish">
+                <p>Chưa xong: {{ countUnfinish }}</p>
+            </div>
             <select @change="handleChangeOption" v-model="select" class="select-task">
               <option value="All" class="option-task">All</option>
               <option value="Chưa hoàn thành" class="option-task">Chưa hoàn thành</option>
@@ -90,7 +104,7 @@ watch(select, (data) => {
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  .select-section{
+  .tools-section{
     display: flex;
     justify-content: flex-end;
   }
@@ -108,6 +122,27 @@ watch(select, (data) => {
 }
 .option-task{
     padding: 10px;
+}
+.count-task__finish,
+.count-task__unfinish {
+    margin: 10px 24px;
+    padding: 10px;
+    width: 150px;
+    border-radius: 5px;
+    color: #fff;
+    outline: none;
+}
+.count-task__finish,
+.count-task__unfinish p {
+  text-align: center  ;
+    font-size: 16px;
+    font-weight: 600;
+}
+.count-task__finish{
+    background-color: #1976d2; 
+}
+.count-task__unfinish{
+    background-color: #616473;
 }
 </style>
 

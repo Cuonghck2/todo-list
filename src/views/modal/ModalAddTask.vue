@@ -14,6 +14,7 @@ defineProps({
 
 })
 const commitStore = useStore();
+let id = ref(1);
 let title = ref('');
 let status = ref(false);
 let emtyError = ref(false)
@@ -30,6 +31,7 @@ const handleAddTask = ()=>{
         title.value = ''
     } else{
         commitStore.commit('addTask', {
+            id: id.value++,
             title: title.value,
             status: status.value
         })
