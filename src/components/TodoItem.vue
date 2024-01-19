@@ -35,7 +35,7 @@ const handleActive = (id) => {
                 </tr>
             </thead>
             <tbody >
-                <tr v-for="(task,index) in taskData" :key="index" @click="handleActive(index)"  :class="{ active: activeRow === index }">
+                <tr  v-for="(task,index) in taskData" :key="index" @click="handleActive(index)"  :class="{ active: activeRow === index }">
                     <td class="todo-title">{{ index+1 }}</td>
                     <td class="todo-title" :class="{brick: task.status}">{{ task.title }}</td>
                     <td class="status">
