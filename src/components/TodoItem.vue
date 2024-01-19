@@ -38,8 +38,8 @@ const handleActive = (id) => {
                     <th >Chức năng</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr v-for="(task,index) in taskData" :key="index" @click="handleActive(index)" v-memo="[activeRowIndex === index]" :class="{ active: activeRowIndex === index }">
+            <tbody class="scrollable-tbody" >
+                <tr v-for="(task,index) in taskData" :key="index" @click="handleActive(index)"  :class="{ active: activeRow === index }">
                     <td class="todo-title">{{ index+1 }}</td>
                     <td class="todo-title" :class="{brick: task.status}">{{ task.title }}</td>
                     <td class="status">
@@ -57,6 +57,7 @@ const handleActive = (id) => {
 <style>
 table {
   width: 100%;
+  height:  100%;
   border-collapse: collapse;
 }
 
@@ -71,7 +72,11 @@ td:hover {
 .todo-title {
   width: 25%;
 }
-
+.scrollable-tbody {
+  height: 330px; 
+  min-width: 100%;
+  overflow-y: auto;
+}
 .status {
   width: 25%;
   text-align: center;

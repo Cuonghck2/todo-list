@@ -30,14 +30,16 @@ watch(filterTask, (data) => {
 
 watch(select, (data) => {
   if (data === 'Chưa hoàn thành') {
-    task.value = filterTask.value.filter(item => !item.status);
+    task.value = filterTask.value.filter(item => item.status === false);
+    console.log("Chưa hoàn thành",task.value)
   } else if (data === 'Đã hoàn thành') {
     task.value = filterTask.value.filter(item => item.status);
+    console.log("Đã hoàn thành", task.value)
+
   } else {
     task.value = filterTask.value;
   }
 });
-
 
 </script>
 <template>
