@@ -8,7 +8,6 @@ let isOpenAdd = ref(false);
 defineProps({
   isOpen: Boolean,
   onclose: Function,
-  taskData: Object
 })
 const handleOpenModal = () => {
   isOpenAdd.value = true
@@ -31,10 +30,8 @@ watch(filterTask, (data) => {
 watch(select, (data) => {
   if (data === 'Chưa hoàn thành') {
     task.value = filterTask.value.filter(item => item.status === false);
-    console.log("Chưa hoàn thành",task.value)
   } else if (data === 'Đã hoàn thành') {
     task.value = filterTask.value.filter(item => item.status);
-    console.log("Đã hoàn thành", task.value)
 
   } else {
     task.value = filterTask.value;
@@ -53,7 +50,7 @@ watch(select, (data) => {
               <option value="Đã hoàn thành" class="option-task">Đã hoàn thành</option>
             </select>
           </div>
-          <TodoItem :taskData="task"/>
+          <TodoItem v-model="task"/>
           <div class="btn-add" @click="handleOpenModal">
             <font-awesome-icon class="add-icon" icon="fa-solid fa-plus" />
           </div>

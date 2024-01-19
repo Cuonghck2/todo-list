@@ -3,11 +3,7 @@ import { watch, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex"
 
-defineProps({
-  taskData: {
-    type: Object,
-  }
-})
+const taskData = defineModel();
 const router = useRouter();
 const storeComit = useStore();
 const handleDelete = (id) => {
@@ -38,7 +34,7 @@ const handleActive = (id) => {
                     <th >Chức năng</th>
                 </tr>
             </thead>
-            <tbody class="scrollable-tbody" >
+            <tbody >
                 <tr v-for="(task,index) in taskData" :key="index" @click="handleActive(index)"  :class="{ active: activeRow === index }">
                     <td class="todo-title">{{ index+1 }}</td>
                     <td class="todo-title" :class="{brick: task.status}">{{ task.title }}</td>
@@ -72,11 +68,7 @@ td:hover {
 .todo-title {
   width: 25%;
 }
-.scrollable-tbody {
-  height: 330px; 
-  min-width: 100%;
-  overflow-y: auto;
-}
+
 .status {
   width: 25%;
   text-align: center;
