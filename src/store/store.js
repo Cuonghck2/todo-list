@@ -19,6 +19,9 @@ const store = createStore({
     completeTask(state, id) {
       state.tasks[id].status = !state.tasks[id].status
       localStorage.setItem('tasks', JSON.stringify(state.tasks))
+    },
+    resetStatus(state, status) {
+      state.tasks.find((task) => task.status === status).status = false
     }
   }
 })
