@@ -25,7 +25,6 @@ const handleChangeStatus = (id) => {
 }
 </script>
 <template>
-    <main>
         <table>
             <thead>
                 <tr>
@@ -48,14 +47,17 @@ const handleChangeStatus = (id) => {
                 </tr>
             </tbody>
         </table>
-    </main>
 </template>
 
 <style>
 table {
   width: 100%;
-  height:  100%;
   border-collapse: collapse;
+}
+
+tbody {
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 td,
@@ -63,9 +65,11 @@ th {
   padding: 8px;
   text-align: center;
 }
+
 td:hover {
   cursor: pointer;
 }
+
 .todo-title {
   width: 25%;
 }

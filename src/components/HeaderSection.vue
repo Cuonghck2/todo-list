@@ -11,6 +11,9 @@ let month = moment().format("MM")
 let year = moment().format("YYYY")
 let weekdays = moment().format("dddd")
 
+defineProps({
+    weather: Object
+})
 
 let date = ref(null)
 const store = useStore()
@@ -19,11 +22,11 @@ watch(date,() => {
    store.commit('resetStatus', false)
 })
 
-let weather = ref({})
+let weatherData = ref({})
 watchEffect(async () => {
    try {
       const res = await axios.get("https://api.weatherapi.com/v1/current.json?key=3c02b60b872f4db6ae795353241901&q=VietNam")
-      weather.value = res.data.current.condition
+      weatherData.value = res.data
    } catch (error) {
       console.log(error)
    }
@@ -32,7 +35,6 @@ watchEffect(async () => {
 </script>
 
 <template>
-    <main>
         <header class="header-section">
            <div class="date-container">
               <span class="day">{{ day }}</span>
@@ -41,12 +43,11 @@ watchEffect(async () => {
                  <span class="year">{{ year }}</span>
               </div>
            </div>
-           <WeatherSectionVue />
+           <WeatherSectionVue :weather="weatherData"/>
            <div class="weekdays">
               {{ weekdays }}
            </div>
         </header>
-    </main>
 </template>
 
 <style>
@@ -54,7 +55,7 @@ watchEffect(async () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 24px;
+    margin: 0px 24px;
  }
 .date-container {
    display: flex;

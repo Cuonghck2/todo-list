@@ -48,16 +48,16 @@ watch(select, (data) => {
 
 </script>
 <template>
-  <main>
     <div class="todolist">
-          <HeaderSection/>
-          <div class="tools-section">
-            <div class="count-task__finish">
-                <p>Đã xong: {{ countFinished }}</p>
+      <!-- <div class="todolist-content"> -->
+        <HeaderSection/>
+        <div class="tools-section">
+          <div class="count-task__finish">
+            <p>Đã xong: {{ countFinished }}</p>
             </div>
             <div class="count-task__unfinish">
                 <p>Chưa xong: {{ countUnfinish }}</p>
-            </div>
+              </div>
             <select @change="handleChangeOption" v-model="select" class="select-task">
               <option value="All" class="option-task">All</option>
               <option value="Chưa hoàn thành" class="option-task">Chưa hoàn thành</option>
@@ -68,14 +68,12 @@ watch(select, (data) => {
           <div class="btn-add" @click="handleOpenModal">
             <font-awesome-icon class="add-icon" icon="fa-solid fa-plus" />
           </div>
-          <ModalAddTask :taskData="task" :onClose="handleCloseModal" :isOpen="isOpenAdd"/>
+          <ModalAddTask :onClose="handleCloseModal" :isOpen="isOpenAdd"/>
+        <!-- </div> -->
     </div>
-  </main>
 </template>
 <style >
   .todolist {
-    display: flex;
-    flex-direction: column;
     position: relative;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -84,6 +82,11 @@ watch(select, (data) => {
     width: 600px;
     height: 600px;
   }
+.todolist-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
   .btn-add {
     position: absolute;
     bottom: -30px;

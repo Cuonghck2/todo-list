@@ -40,7 +40,6 @@ const handleAddTask = ()=>{
 }
 </script>
 <template>
-    <main>
         <div v-if="isOpen">
             <div class="modal-overlay"></div>
             <div class="modal-add">
@@ -54,7 +53,6 @@ const handleAddTask = ()=>{
                 <button class="close-modal" @click="onClose">Đóng</button>
             </div>
         </div>
-    </main>
 </template>
 
 <style>
